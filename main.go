@@ -21,6 +21,13 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+	if u.Scheme == "" {
+		w.WriteHeader(400)
+		if _, err := w.Write([]byte("RSS url needs to include a protocol scheme")); err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
 	feed, err := parseFeedFromUrl(u)
 	if err != nil {
 		w.WriteHeader(400)
