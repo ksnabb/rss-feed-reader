@@ -80,6 +80,18 @@ func TestParseRSS(t *testing.T) {
 		}
 	})
 
+	t.Run("test rss url without protocol scheme", func(t *testing.T) {
+		r := httptest.NewRequest(
+			http.MethodPost,
+			"/",
+			strings.NewReader("www.test.com"))
+		w := httptest.NewRecorder()
+		requestHandler(w, r)
+		if w.Result().StatusCode != 400 {
+			t.Fatal("Status code returned was not 400 when RSS url was missing the protocol scheme")
+		}
+	})
+
 	t.Run("test invalid RSS feed", func(t *testing.T) {
 		r := httptest.NewRequest(
 			http.MethodPost,
