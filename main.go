@@ -39,8 +39,13 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func pingHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
+}
+
 func main() {
 	http.HandleFunc("/", requestHandler)
+	http.HandleFunc("/ping", pingHandler)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}
