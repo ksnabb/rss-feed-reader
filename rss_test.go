@@ -65,18 +65,17 @@ func TestParseRSS(t *testing.T) {
 	})
 
 	t.Run("test invalid rss url", func(t *testing.T) {
-		r := httptest.NewRequest(
-			http.MethodPost,
-			"/",
-			strings.NewReader("this :// is not a url"))
-		w := httptest.NewRecorder()
-		requestHandler(w, r)
-		if w.Result().StatusCode != 400 {
-			t.Fatal("Status code returned was not 400")
-		}
-		content, _ := io.ReadAll(w.Result().Body)
-		if string(content) != "error in request, url passed in body was not valid" {
-			t.Fatal("Message returned was incorrect")
+		invalidUrls := []string{"this :// is not a url", "https://en.wikipe"}
+		for _, invalidUrl := range invalidUrls {
+			r := httptest.NewRequest(
+				http.MethodPost,
+				"/",
+				strings.NewReader(invalidUrl))
+			w := httptest.NewRecorder()
+			requestHandler(w, r)
+			if w.Result().StatusCode != 400 {
+				t.Fatal("Status code returned was not 400")
+			}
 		}
 	})
 

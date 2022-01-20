@@ -32,7 +32,7 @@ func parseFeedFromXML(rssXml []byte) (Feed, error) {
 func parseFeedFromUrl(rssFeedUrl *url.URL) (Feed, error) {
 	resp, err := http.Get(rssFeedUrl.String())
 	if err != nil {
-		log.Fatal(err)
+		return Feed{}, err
 	}
 	if resp.StatusCode != 200 {
 		return Feed{}, errors.New("url did not return statusCode 200")
