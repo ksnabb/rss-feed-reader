@@ -42,7 +42,7 @@ func TestParseRSS(t *testing.T) {
 		w := httptest.NewRecorder()
 		requestHandler(w, r)
 		feed, _ := io.ReadAll(w.Result().Body)
-		expectedFeed := `{"title":"test RSS feed title","items":[{"title":"article 1","desciption":"one","link":"https://example.com/1","pubDate":""},{"title":"article 2","desciption":"two","link":"https://example.com/2","pubDate":""}]}`
+		expectedFeed := `{"title":"test RSS feed title","items":[{"title":"article 1","description":"one","link":"https://example.com/1","pubDate":""},{"title":"article 2","description":"two","link":"https://example.com/2","pubDate":""}]}`
 		if string(feed) != expectedFeed {
 			t.Fatalf("expected feed %v does not equal parsed feed %s", expectedFeed, feed)
 		}
